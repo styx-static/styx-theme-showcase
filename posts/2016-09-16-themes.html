@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Themes - Styx Showcase Theme</title>
+<link href="http://yourdomain.com/feed.xml" rel="alternate" type="application/atom+xml" />
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="http://yourdomain.com/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container">
+<div class="navbar-header">
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="navbar-brand" href="http://yourdomain.com">Styx Showcase Theme</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="http://yourdomain.com/about.html">About</a></li>
+<li><a href="http://yourdomain.com/archive/post.html">Archives</a></li>
+<li><a href="http://yourdomain.com/feed.xml">RSS</a></li>
+<li><a href="https://styx-static.github.io/styx-site/">Styx</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="page-content">
+  <div class="container wrapper">
+    <div class="row">
+      <div class="col-md-9">
+        <ol class="breadcrumb">
+  <li><a href="http://yourdomain.com/index.html"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+
+  <li class="active">Themes</li>
+</ol>
+
+        <article class="full">
+
+  <div class="banner" style="background-image: url(http://yourdomain.com/post-banners/chalk.jpg);">
+  </div>
+  <header class="post-header">
+    <h1>Themes</h1>
+  </header>
+
+  <div class="meta text-muted">
+    <p>
+      <i class="fa fa-calendar-o" aria-hidden="true"></i>
+      <time datetime="2016-09-16T00:00:00">16 Sep 2016</time>
+    </p>
+    <p><i class="fa fa-tags" aria-hidden="true"></i> <a href="http://yourdomain.com/tags/themes/">themes</a></p>
+  </div>
+
+  <div class="content">
+    <p>Themes are the main way to customize Styx sites. This post introduce themes basics.</p>
+
+<p>Themes can provide the following:</p>
+
+<ul>
+<li>Template files</li>
+<li>Static files</li>
+<li>A configuration interface</li>
+<li>An example site</li>
+<li>A function library</li>
+</ul>
+
+<h2 id="previewingatheme">Previewing a theme</h2>
+
+<p>Previewing a theme fom the <code>styx-themes</code> package set is very easy, the following will launch the preview site for the showcase theme.</p>
+
+<pre><code>$ styx preview --in $(nix-build -A styx-themes.showcase '&lt;nixpkgs&gt;')/example
+</code></pre>
+
+<h2 id="usingatheme">Using a theme</h2>
+
+<p>It just require to add the theme to <code>site.nix</code> <code>themes</code> list to use a theme.<br/>
+Themes from the <code>styx-themes</code> package or local themes can be used and combined.</p>
+
+<pre><code>  /* list the themes to load, paths or packages can be used
+     items at the end of the list have higher priority
+  */
+  themes = [
+    styx-themes.generic-templates
+    ./themes/my-theme
+  ];
+</code></pre>
+
+<h2 id="customizingthemes">Customizing themes</h2>
+
+<h3 id="configurationinterface">Configuration interface</h3>
+
+<p>The main way to customize a theme is by using the configuration interface.</p>
+
+<p>Every theme expose some of its functionality to various degrees in the <code>themes/THEME/conf.nix</code> file.
+A theme <code>conf.nix</code> is usually commented or theme documentation is available in another file such as <code>themes/THEME/readme.md</code>.</p>
+
+<p>Let&#8217;s say that the theme exposes a <code>site.title</code> option to change the site title. To change this option you need edit the <em>site</em> <code>conf.nix</code> file (in the site root) in the following manner:</p>
+
+<pre><code>{
+  theme.site.title = &quot;My Site&quot;;
+}
+</code></pre>
+
+<h3 id="extendingthemes">Extending themes</h3>
+
+<p>To change a template or a file provided by a theme, you do not need to edit it! You can just &#8220;extend&#8221; the theme.</p>
+
+<p>Extending a theme consist in creating a new theme with only the files you want to override from an other theme.</p>
+
+<p>Let&#8217;s say you want to extend the <code>generic-templates</code> theme <code>templates.partials.head.css-custom</code> template to load <code>themes/my-theme/files/css/style.css</code>.<br/>
+First we need to create a new theme, the <code>new theme</code> command can create a theme folder structure:</p>
+
+<pre><code>$ styx new theme my-theme --in ./themes
+</code></pre>
+
+<p>Next we just need to add <code>my-theme</code> to the themes list in <code>site.nix</code>:</p>
+
+<pre><code>  themes = [
+    styx-themes.generic-templates
+    ./themes/my-theme
+  ]; 
+</code></pre>
+
+<p>Then create a <code>themes/my-theme/templates/partials/head/css-custom.nix</code> with the following code to load <code>themes/my-theme/files/css/style.css</code>.</p>
+
+<pre><code>{ templates, ... }:
+args:
+templates.tag.link-css { href = templates.url &quot;/css/style.css&quot;; }
+</code></pre>
+
+<p>For more details refer to the <a href="https://styx-static.github.io/styx-site/documentation.html#Themes">themes</a> chapter of styx documentation.</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+      <div class="col-md-3">
+        <div class="sidebar">
+  <section>
+  <h2>Taxonomies</h2>
+  <section class="taxonomy">
+<header><a href="http://yourdomain.com/level/">level</a></header>
+<ul class="terms">
+<li><a href="http://yourdomain.com/level/★★★/">★★★</a> (1)</li>
+
+<li><a href="http://yourdomain.com/level/★★/">★★</a> (3)</li>
+
+<li><a href="http://yourdomain.com/level/★/">★</a> (1)</li>
+
+</ul>
+
+<header><a href="http://yourdomain.com/tags/">tags</a></header>
+<ul class="terms">
+<li><a href="http://yourdomain.com/tags/pages/">pages</a> (2)</li>
+
+<li><a href="http://yourdomain.com/tags/data/">data</a> (1)</li>
+
+<li><a href="http://yourdomain.com/tags/themes/">themes</a> (1)</li>
+
+<li><a href="http://yourdomain.com/tags/basics/">basics</a> (1)</li>
+
+</ul>
+
+</section>
+
+</section>
+
+  <section>
+  <h2>Recent Posts</h2>
+  <ul>
+  <li>
+  <a href="http://yourdomain.com/posts/2016-09-18-basics.html">Basics</a>
+</li>
+
+<li>
+  <a href="http://yourdomain.com/posts/2016-09-16-themes.html">Themes</a>
+</li>
+
+<li>
+  <a href="http://yourdomain.com/posts/2016-09-15-data.html">Data</a>
+</li>
+
+<li>
+  <a href="http://yourdomain.com/posts/2016-09-14-pages.html">Pages</a>
+</li>
+
+<li>
+  <a href="http://yourdomain.com/posts/2016-09-13-multipages.html">Multipages</a>
+</li>
+
+  </ul>
+</section>
+
+</div>
+
+      </div>
+    </div>
+  </div>
+</div><footer>
+  <div class="container wrapper">
+    <div class="row">
+      <div class="col-sm-4 col-xs-4">
+        <p>&copy; 2016</p>
+      </div>
+      <div class="col-sm-4 col-xs-4">
+        <ul class="list-unstyled">
+          <li><a href="https://nixos.org/nix/">Nix</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4 col-xs-4">
+        <p>Write a description for your new site here.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script crossorigin="anonymous" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
