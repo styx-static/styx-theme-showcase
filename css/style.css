@@ -26,7 +26,7 @@ body>footer ul {
 article .banner {
     display: block;
     height: 7em;
-    background-image: url("/post-banners/abstract.png");
+    background-image: url("https://styx-static.github.io/styx-theme-showcase/post-banners/abstract.png");
     background-position: center center;
 }
 article.full .banner {
