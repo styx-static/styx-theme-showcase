@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/about.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/level/★★/index.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/404.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/level/★/index.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/feed.xml</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/tags/content/index.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/index.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/tags/pages/index.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/index-2.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/tags/themes/index.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-basics.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/tags/tutorial/index.html</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://styx-static.github.io/styx-theme-showcase/level/index.html</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://styx-static.github.io/styx-theme-showcase/tags/index.html</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://styx-static.github.io/styx-theme-showcase/archive/post.html</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-19-blog-tutorial.html</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-features.html</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-17-media.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
@@ -37,55 +63,31 @@
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-multipages.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-drafts.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/archive/post.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data-2.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-multipages-2.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/index.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-multipages-3.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/index-2.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/level/★★★/index.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/feed.xml</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/level/★★/index.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/404.html</loc>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/level/★/index.html</loc>
+  <loc>https://styx-static.github.io/styx-theme-showcase/about.html</loc>
   <changefreq>monthly</changefreq>
 </url>
-<url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/tags/pages/index.html</loc>
-  <changefreq>monthly</changefreq>
-</url>
-<url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/tags/data/index.html</loc>
-  <changefreq>monthly</changefreq>
-</url>
-<url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/tags/themes/index.html</loc>
-  <changefreq>monthly</changefreq>
-</url>
-<url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/tags/basics/index.html</loc>
-  <changefreq>monthly</changefreq>
-</url>
-<url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/level/index.html</loc>
-  <changefreq>monthly</changefreq>
-</url>
-<url>
-  <loc>https://styx-static.github.io/styx-theme-showcase/tags/index.html</loc>
-  <changefreq>monthly</changefreq>
-</url>
-</urlset> 
+</urlset>

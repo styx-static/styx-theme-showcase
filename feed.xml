@@ -1,90 +1,700 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Styx Showcase Theme</title>
+  <title>Showcase Example</title>
   
   <generator>Styx</generator>
-  <updated>2016-09-18T00:00:00"</updated>
+  <updated>2016-09-19T00:00:00Z</updated>
   <id>https://styx-static.github.io/styx-theme-showcase/feed.xml</id>
   <link href="https://styx-static.github.io/styx-theme-showcase/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="https://styx-static.github.io/styx-theme-showcase/" rel="alternate"/>
-  
+  <author>
+  <name>Styx</name>
+</author>
+
   
   
   <entry>
-  <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-basics.html</id>
-  <title>Basics</title>
-  <updated>2016-09-18T00:00:00"</updated>
-  <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-basics.html" rel="alternate" type="text/html"/>
+  <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-19-blog-tutorial.html</id>
+  <title>Blog tutorial</title>
+  <updated>2016-09-19T00:00:00Z</updated>
+  <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-19-blog-tutorial.html" rel="alternate" type="text/html"/>
   <summary type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Styx is a static site generator based on the Nix package manager.</p>
-    </div>
-  </summary>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <div class="paragraph">
+<p>Tutorial for creating a blog.</p>
+</div>
+
+      </div>
+    </summary>
   <content type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Styx is a static site generator based on the Nix package manager.</p>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <div class="sect1">
+<h2 id="_create_a_new_site">Create a new site</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First, we will use the styx <code>new</code> command to generate files required for a new site:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx new site my-blog
+$ cd my-blog</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>styx new site</code> will generate the following file structure:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">my-blog
+├── conf.nix
+├── data
+├── readme.md
+├── site.nix
+└── themes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The most important file is <code>site.nix</code>, it contains all the logic to generate our site.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_declare_themes">Declare Themes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In <code>site.nix</code>, find the line declaring the themes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  themes = [
+  ];</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And change it to the following to load the Hyde and generic templates themes. (Hyde requires the generic templates theme)<br/>
+Later themes in the list have higher priority.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  themes = [
+    styx-themes.generic-templates
+    styx-themes.hyde
+  ];</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_an_index_page">Create an index page</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next, we will create an index page, in <code>site.nix</code> find the line declaring the <code>pages</code> attribute set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pages = rec {
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And let&#8217;s add an index page, a page is an attribute set defining at least <code>template</code>, <code>layout</code> and <code>path</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pages = rec {
+    index = {
+      title    = "Home";
+      path     = "/index.html";
+      template = templates.index;
+      layout   = templates.layout;
+    };
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The site can be previewed by running <code>styx preview</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx preview</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The site will be accessible at <a href="http://127.0.0.1:8080" class="bare">http://127.0.0.1:8080</a>.
+To end the preview, hit <code>Ctrl+C</code>.</p>
+</div>
+<div class="paragraph">
+<p>If anything goes wrong during the preview, you can use the <code>--show-trace</code> flag to make styx print a debug trace:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx preview --show-trace</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_data">Create data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Our index page should list our blog posts, so we will need to generate some data and create pages in our new blog.<br/>
+Then <code>gen-sample-data</code> command that will generate some data for us:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx gen-sample-data</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This generate the following data:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">data
+└── sample
+    ├── pages
+    │   └── about.md
+    └── posts
+        ├── 2016-09-13-drafts.md
+        ├── 2016-09-14-pages.md
+        ├── 2016-09-15-data.md
+        ├── 2016-09-16-themes.md
+        ├── 2016-09-17-media.md
+        ├── 2016-09-18-features.md
+        └── 2016-09-19-blog-tutorial.adoc</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_a_page">Adding a page</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the sample data, there is an about page. Lets add it to our site.</p>
+</div>
+<div class="paragraph">
+<p>First we need to load its data, is a single file, so we will use <code>loadFile</code>:</p>
+</div>
+<div class="paragraph">
+<p>Find the following line declaring the <code>data</code> set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  data = {
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And change it to load the about page data:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  data = {
+    about = lib.loadFile { file = ./data/sample/pages/about.md"; inherit env; };
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And the page in the <code>pages</code> set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pages = {
+    index = {
+      title    = "Home";
+      path     = "/index.html";
+      template = templates.index;
+      layout   = templates.layout;
+    };
 
-<p>Styx has the following features:</p>
+    about = data.about // {
+      path     = "/about.html";
+      template = templates.page.full;
+      layout   = templates.layout;
+    };
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To make the page easily accessible, we can add an entry in the sidebar for the about page by adding a <code>menu</code> to our <code>data</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  data = {
+    about = lib.loadFile { file = ./data/sample/pages/about.md"; inherit env; };
+    menu  = [ pages.about ];
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can preview the site again with the <code>styx preview</code> command and verify that there is a link for the about page in the sidebar.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_posts">Add posts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next we can add our posts, lets add a <code>posts</code> attribute to the <code>data</code> set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  data = {
+    about = lib.loadFile { file = ./data/sample/pages/about.md"; inherit env; };
+    menu  = [ pages.about ];
+    posts = lib.sortBy "date" "dsc" (lib.loadDir { dir = ./data/sample/posts; inherit env; });
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>loadDir</code> load all the data inside a directory and <code>sortBy</code> sort it.</p>
+</div>
+<div class="paragraph">
+<p>To generate pages, we need to add them to the <code>pages</code> attribute set.<br/>
+In the <code>pages</code> set, add the posts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pages = rec {
+    index = {
+      title    = "Home";
+      path     = "/index.html";
+      template = templates.index;
+      layout   = templates.layout;
+    };
+
+    about = data.about // {
+      path     = "/about.html";
+      template = templates.page.full;
+      layout   = templates.layout;
+    };
+
+    posts = lib.mkPageList {
+      data       = data.posts;
+      pathPrefix = "/posts/";
+      template   = templates.post.full;
+      layout     = templates.layout;
+    };
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>mkPageList</code> takes a list of data and generate a list of pages.</p>
+</div>
+<div class="paragraph">
+<p>Lets preview our site again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx preview</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Posts are generated, but are not listed on the index page yet.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_index_page_revisited">Index page revisited</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Hyde is designed so the most recent posts appears on the index page, and older posts are on archive pages.<br/>
+So we need to split our posts between the index and archive pages.</p>
+</div>
+<div class="paragraph">
+<p>There is a <code>mkSplit</code> function that does just that.<br/>
+So we will adapt our index page declaration to use it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pages = rec {
+    index = lib.mkSplit {
+      title        = "Home";
+      basePath     = "/index";
+      itemsPerPage = conf.theme.itemsPerPage;
+      template     = templates.index;
+      data         = posts.list;
+      layout       = templates.layout;
+    };
+
+    ...
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>mkSplit</code> takes a list of <code>data</code> and make multiple pages of <code>itemsPerPage</code> item each.<br/>
+Pages path is automatically generated by using <code>basePath</code>.</p>
+</div>
+<div class="paragraph">
+<p>Lets preview our site again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx preview</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Posts are listed on the index page, and archive pages are also generated, all good.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_an_atom_feed">Adding an atom feed</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next step is adding an atom feed.<br/>
+To do so, we just need to create a page:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pages = {
+    ...
+
+    feed = {
+      path     = "/feed.xml";
+      template = templates.feed.atom;
+      layout   = lib.id;
+      items    = lib.take 10 posts.list;
+    };
+  };</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_checking_the_links">Checking the links</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Styx have a linkcheck functionality that check internal links of a site:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx linkcheck</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_improvements">Improvements</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_customizing_our_site">Customizing our site</h3>
+<div class="paragraph">
+<p>The Hyde theme provide some configuration options that can be used to customize our blog.</p>
+</div>
+<div class="paragraph">
+<p>The following command will generate a documentation for our site, so we can check the avalaible theme options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ styx site-doc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To change the theme options, edit <code>conf.nix</code> at site root and find the following line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  theme = {
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And change it to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  theme = {
+    site.title   = "My Styx Blog";
+    colorScheme  = "0d";
+    itemsPerPage = 5;
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s preview our site and see what changed.</p>
+</div>
+<div class="paragraph">
+<p>There are a few posts using source code examples, it would be nice to have syntax highlighting.<br/>
+Syntax highlighting can also be enabled via the configuration interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  theme = {
+    site.title   = "My Styx Blog";
+    colorScheme  = "0d";
+    itemsPerPage = 5;
+    lib.highlightjs = {
+      enable = true;
+      style = "monokai";
+      extraLanguages = [ "nix" ];
+    };
+  };</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cleaning_up">Cleaning up</h3>
+<div class="paragraph">
+<p>All of our pages are declaring the same <code>layout</code>.<br/>
+It is possible to set attributes to every page when converting our page set to a page list.</p>
+</div>
+<div class="paragraph">
+<p>In <code>site.nix</code> find:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pageList = lib.pagesToList { inherit pages; };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add the default layout here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pageList = lib.pagesToList { inherit pages; default = { layout = templates.layout; }; };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And remove all the <code>layout</code> declarations using <code>templates.layout</code> of our pages:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nix" data-lang="nix">  pages = rec {
+    index = lib.mkSplit {
+      title        = "Home";
+      basePath     = "/index";
+      itemsPerPage = conf.theme.itemsPerPage;
+      template     = templates.index;
+      data         = posts.list;
+    };
+
+    posts = lib.mkPageList {
+      data       = data.posts;
+      pathPrefix = "/posts/";
+      template   = templates.post.full;
+    };
+
+    about = data.about // {
+      path     = "/about.html";
+      template = templates.page.full;
+      layout   = templates.layout;
+    };
+
+    feed = {
+      path     = "/feed.xml";
+      template = templates.feed.atom;
+      layout   = lib.id;
+      items    = lib.take 10 posts.list;
+    };
+  };</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+      </div>
+    </content>
+</entry>
+
+<entry>
+  <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-features.html</id>
+  <title>Features</title>
+  <updated>2016-09-18T00:00:00Z</updated>
+  <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-features.html" rel="alternate" type="text/html"/>
+  <summary type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This post introduce Styx main features.</p>
+
+      </div>
+    </summary>
+  <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <h2 id="cleanseparationofconcerns">Clean separation of concerns</h2>
+
+<p>A styx site is mainly managed in a single <code>site.nix</code> file. <code>site.nix</code> is divided in multiple parts, each one handling a special aspect of the site.</p>
 
 <ul>
-<li>Themes</li>
-<li>Clean separation of concerns</li>
-<li>Flexibility</li>
-<li>Markdown and AsciiDoc file support</li>
-<li>Content metadata</li>
+<li>In the <code>data</code> section, external data files are fetched and data structures are declared.</li>
+<li>The <code>pages</code> section controls the page that will be generated.</li>
 </ul>
 
-<h2 id="cleanseparationofconcerns">Clean separation of concerns</h2>
+<p>The configuration of a site is managed in an external <code>conf.nix</code>, where any of the used themes configuration interface can be used.</p>
 
-<p>Styx has a clean separation of concerns.</p>
+<h2 id="themes">Themes</h2>
 
-<p>on a file level:</p>
+<p>Themes are the main way to create and customize Styx sites, themes can provide:</p>
 
 <ul>
-<li><code>site.nix</code> handles all the logic of the site generation.</li>
-<li><code>conf.nix</code> manage the theme and other settings.</li>
-<li><code>themes</code> manage templates and static files.</li>
-<li>Every data is managed in its own file.</li>
+<li>Templates</li>
+<li>Static files</li>
+<li>Configuration interface</li>
+<li>Function library</li>
 </ul>
 
-<p>On a logical level, in <code>site.nix</code>:</p>
+<p>Themes can be combined in a modular way, making it is easy to personalize or extend an existing theme.</p>
 
-<ul>
-<li>The <code>data</code> section handle external data fetching.</li>
-<li>The <code>pages</code> section handle the page generation from data or from scratch.</li>
-</ul>
+<p>The <code>generic-templates</code> theme provide a template framework that can be used for quick website prototyping.</p>
 
-<p>To preview the site after a change, the <code>styx preview</code> command ca be used.</p>
+<p>Themes from the <code>styx-themes</code> package set can be used directly without needing to be downloaded.</p>
 
-<p>Other posts will introduce <code>themes</code>, <code>data</code> and <code>pages</code>.</p>
+<h2 id="content">Content</h2>
 
-<h2 id="flexibility">Flexibility</h2>
+<p>Styx handle markdown and asciidoc content. Nix can also be used for structured data.</p>
 
-<p>Styx does not enforce any data or site structure. You are totally free to do whatever you want.</p>
+<p>Markup files can declare metadata (front-matter) and easily declare introduction or multiples pages with dedicated separators.</p>
 
-<p>Also, the site generation function provides hooks that allow even more use cases, Styx site use the <code>postGen</code> to generate every styx version documentation.</p>
+<p>Nix code can also be called in markup file, and this can be used to easily include external medias in content.</p>
 
-<p>For more details refer to the <a href="https://styx-static.github.io/styx-site/documentation.html#_basics">basics</a> chapter of styx documentation.</p>
+<h2 id="templateengine">Template engine</h2>
 
-    </div>
-  </content>
+<p>Styx templates are written in the same language <code>site.nix</code> is written, the nix expression language.<br/>
+A template is just a nix function returning text or an attribute set.</p>
+
+<p>This make it very easy to include other template as it is just calling that template function:</p>
+
+<pre><code class="nix">''
+  &amp;lt;h1&amp;gt;Foo&amp;lt;/h1&amp;gt;
+  ${templates.bar}
+''
+</code></pre>
+
+<p>Template functions can take arguments, so a list of post can be generated in the following fashion:</p>
+
+<pre><code class="nix">''
+  &amp;lt;h1&amp;gt;Foo&amp;lt;/h1&amp;gt;
+  ${mapTemplate templates.posts.list page.posts}
+''
+</code></pre>
+
+<p>Every theme can provide templates functions, and new library functions that can be used in templates.</p>
+
+<h2 id="configurationinterface">Configuration interface</h2>
+
+<p>Each theme can provide a configuration interface that can be used in the site configuration file.
+A theme configuration can profide extra information such as types and documentation.
+This allows to type-check configuration and to generate documentation for themes.</p>
+
+<h2 id="interactivedebugging">Interactive debugging</h2>
+
+<p><code>nix-repl</code> can be used to inspect interactively any variable of a <code>site.nix</code> file.<br/>
+Pages can be generated and the site can even be built from the repl.</p>
+
+<pre><code class="sh">$ nix-repl &quot;&lt;nixpkgs&gt;&quot;
+
+nix-repl&gt; site = callPackage (import ./site.nix) {}
+
+nix-repl&gt; site.conf
+{ siteUrl = &quot;https://styx-static.github.io/styx-theme-showcase&quot;; theme = { ... }; }
+</code></pre>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>Styx is well documented, <code>styx doc</code> will lanch the documentation for the current version in a browser.
+It is also possible to generate a documentation for a site by using the <code>styx site-doc</code> command in the site directory.</p>
+
+<h2 id="deploymentfacilities">Deployment facilities</h2>
+
+<p>Styx has a <code>deploy</code> sub-command that can be used to easily deploy a site to GitHub pages.
+Any styx site can also be deployed with NixOps.</p>
+
+      </div>
+    </content>
+</entry>
+
+<entry>
+  <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-17-media.html</id>
+  <title>Embedded media</title>
+  <updated>2016-09-17T00:00:00Z</updated>
+  <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-17-media.html" rel="alternate" type="text/html"/>
+  <summary type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This post introduce how to embed media inside styx content.</p>
+
+      </div>
+    </summary>
+  <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>The generic templates template theme provide templates that can be used in content to embed external media.</p>
+
+<p>To use the generic template theme add it to the themes list of <code>site.nix</code>:</p>
+
+<pre><code class="nix">  themes = [
+    styx-themes.generic-templates
+  ];
+</code></pre>
+
+<h2 id="youtubevideos">Youtube videos</h2>
+
+<pre><code class="nix">{{ templates.media.youtube { id = &quot;YbUPdv03ciI&quot;; } }}
+</code></pre>
+
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/YbUPdv03ciI?ecver=1" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="vimeovideos">Vimeo videos</h2>
+
+<pre><code class="nix">{{ templates.media.vimeo { id = &quot;124510855&quot;; } }}
+</code></pre>
+
+<p><iframe src="https://player.vimeo.com/video/124510855" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></p>
+
+<h2 id="speackerdeckpresentation">Speacker deck presentation</h2>
+
+<pre><code class="nix">{{ templates.media.speakerdeck { id = &quot;0c32d0d17488429eaf6bc3278c1d0fc8&quot;; } }}
+</code></pre>
+
+<script async="async" class="speakerdeck-embed" data-id="0c32d0d17488429eaf6bc3278c1d0fc8" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<h2 id="githubgists">GitHub Gists</h2>
+
+<pre><code class="nix">{{ templates.media.gist { user = &quot;dmalikov&quot;; id = &quot;613fa59063604e51d323&quot;; } }}
+</code></pre>
+
+<script src="https://gist.github.com/dmalikov/613fa59063604e51d323.js"></script>
+
+<h2 id="giphy">Giphy</h2>
+
+<pre><code class="nix">{{ templates.media.giphy { id = &quot;4yh9SoRl7QLjW&quot;; height = 360; width = 480; } }}
+</code></pre>
+
+<p><iframe src="//giphy.com/embed/4yh9SoRl7QLjW" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></p>
+
+<h2 id="slideshare">Slide share</h2>
+
+<pre><code class="nix">{{ templates.media.slideshare { embedCode = &quot;60836660&quot;; } }}
+</code></pre>
+
+<p><iframe src='https://www.slideshare.net/slideshow/embed_code/60836660' width='640' height='480' allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></p>
+
+<h2 id="twitter">Twitter</h2>
+
+<pre><code>{{ templates.media.twitter { user = &quot;nixos_org&quot;; height = 600; } }}
+</code></pre>
+
+<p><a class="twitter-timeline" data-height="600" href="https://twitter.com/nixos_org">Tweets by nixos_org</a>
+ <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> </p>
+
+      </div>
+    </content>
 </entry>
 
 <entry>
   <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-16-themes.html</id>
   <title>Themes</title>
-  <updated>2016-09-16T00:00:00"</updated>
+  <updated>2016-09-16T00:00:00Z</updated>
   <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-16-themes.html" rel="alternate" type="text/html"/>
   <summary type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Themes are the main way to customize Styx sites. This post introduce themes basics.</p>
-    </div>
-  </summary>
-  <content type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Themes are the main way to customize Styx sites. This post introduce themes basics.</p>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This post introduce themes, a central concept in styx.</p>
 
-<p>Themes can provide the following:</p>
+      </div>
+    </summary>
+  <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Themes are more than just a way to customize a site looks. </p>
+
+<p>A theme can provide:</p>
 
 <ul>
 <li>Template files</li>
@@ -94,198 +704,277 @@
 <li>A function library</li>
 </ul>
 
-<h2 id="previewingatheme">Previewing a theme</h2>
+<p>A theme can be extended by another, and multiple themes can be combined together.</p>
 
-<p>Previewing a theme fom the <code>styx-themes</code> package set is very easy, the following will launch the preview site for the showcase theme.</p>
+<h2 id="basics">Basics</h2>
 
-<pre><code>$ styx preview --in $(nix-build -A styx-themes.showcase '&lt;nixpkgs&gt;')/example
-</code></pre>
+<p>Themes are declared in <code>site.nix</code>. Local themes are used by proving a path, but is possible to use remote themes, like themes of the <code>styx-themes</code> directly.</p>
 
-<h2 id="usingatheme">Using a theme</h2>
+<p>To use a themes, it is just required to add it to the <code>themes</code> list:</p>
 
-<p>It just require to add the theme to <code>site.nix</code> <code>themes</code> list to use a theme.<br/>
-Themes from the <code>styx-themes</code> package or local themes can be used and combined.</p>
-
-<pre><code>  /* list the themes to load, paths or packages can be used
-     items at the end of the list have higher priority
-  */
-  themes = [
+<pre><code class="nix">  themes = [
     styx-themes.generic-templates
     ./themes/my-theme
   ];
 </code></pre>
 
-<h2 id="customizingthemes">Customizing themes</h2>
+<p>Themes at the beginning of the list have lower priority.<br/>
+In this example, the <code>styx-themes.generic-templates</code> is combined with the <code>./themes/my-theme</code> theme.</p>
 
-<h3 id="configurationinterface">Configuration interface</h3>
+<h2 id="examplesites">Example sites</h2>
 
-<p>The main way to customize a theme is by using the configuration interface.</p>
+<p>Themes of the <code>styx-themes</code> package provide an example site that can b previewed locally by running a single command:</p>
 
-<p>Every theme expose some of its functionality to various degrees in the <code>themes/THEME/conf.nix</code> file.
-A theme <code>conf.nix</code> is usually commented or theme documentation is available in another file such as <code>themes/THEME/readme.md</code>.</p>
-
-<p>Let&#8217;s say that the theme exposes a <code>site.title</code> option to change the site title. To change this option you need edit the <em>site</em> <code>conf.nix</code> file (in the site root) in the following manner:</p>
-
-<pre><code>{
-  theme.site.title = &quot;My Site&quot;;
-}
+<pre><code class="sh">$ styx preview --in $(nix-build --no-out-link -A styx-themes.showcase '&lt;nixpkgs&gt;')/example
 </code></pre>
 
-<h3 id="extendingthemes">Extending themes</h3>
+<p>The list of themes in the <code>styx-themes</code> set can be listed with the following command:</p>
 
-<p>To change a template or a file provided by a theme, you do not need to edit it! You can just &#8220;extend&#8221; the theme.</p>
-
-<p>Extending a theme consist in creating a new theme with only the files you want to override from an other theme.</p>
-
-<p>Let&#8217;s say you want to extend the <code>generic-templates</code> theme <code>templates.partials.head.css-custom</code> template to load <code>themes/my-theme/files/css/style.css</code>.<br/>
-First we need to create a new theme, the <code>new theme</code> command can create a theme folder structure:</p>
-
-<pre><code>$ styx new theme my-theme --in ./themes
+<pre><code class="sh">$ nix-env -f &quot;&lt;nixpkgs&gt;&quot; -qaP -A styx-themes
+styx-themes.agency    styx-theme-agency-2016-12-03
+styx-themes.hyde      styx-theme-hyde-2016-12-03
+styx-themes.orbit     styx-theme-orbit-2016-12-03
+styx-themes.showcase  styx-theme-showcase-2016-12-04
 </code></pre>
 
-<p>Next we just need to add <code>my-theme</code> to the themes list in <code>site.nix</code>:</p>
+<h2 id="configurationinterface">Configuration interface</h2>
 
-<pre><code>  themes = [
-    styx-themes.generic-templates
-    ./themes/my-theme
-  ]; 
+<p>A theme can provide many configuration options that can be used to customize it.<br/>
+These configuration options can be used and changed in the site <code>conf.nix</code>. An interesting feature is that these options can be typed, and if they are styx will automatically do a type check when building a site.</p>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>Themes that are part of the <code>styx-themes</code> are documented in the styx documentation that can be launched with the following command:</p>
+
+<pre><code class="sh">$ styx doc
 </code></pre>
 
-<p>Then create a <code>themes/my-theme/templates/partials/head/css-custom.nix</code> with the following code to load <code>themes/my-theme/files/css/style.css</code>.</p>
+<p>It is also possible to generate a documentation for the themes used in a site. In site root run the following command:</p>
 
-<pre><code>{ templates, ... }:
-args:
-templates.tag.link-css { href = templates.url &quot;/css/style.css&quot;; }
+<pre><code class="sh">$ styx site-doc
 </code></pre>
 
-<p>For more details refer to the <a href="https://styx-static.github.io/styx-site/documentation.html#Themes">themes</a> chapter of styx documentation.</p>
-
-    </div>
-  </content>
+      </div>
+    </content>
 </entry>
 
 <entry>
   <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html</id>
-  <title>Data</title>
-  <updated>2016-09-15T00:00:00"</updated>
+  <title>Content</title>
+  <updated>2016-09-15T00:00:00Z</updated>
   <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html" rel="alternate" type="text/html"/>
   <summary type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Styx support multiple data formats. External data is handled in the <code>data</code> section <code>site.nix</code>. This post introduce how to manage a styx site data.</p>
-    </div>
-  </summary>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This post introduce how to manage content in styx.</p>
+
+      </div>
+    </summary>
   <content type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Styx support multiple data formats. External data is handled in the <code>data</code> section <code>site.nix</code>. This post introduce how to manage a styx site data.</p>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Content, also called as data in <code>site.nix</code> or the documentation, refers to the content used to generate a site.</p>
 
-<h2 id="formats">Formats</h2>
-
-<p>Styx support data in the following formats:</p>
+<p>Multiple formats are supported:</p>
 
 <ul>
-<li>Markdown: simple and easy to use markup format.</li>
-<li>AsciiDoc: markup format with many features.</li>
-<li>Nix: data centric format.</li>
+<li>Markdown</li>
+<li>Asciidoc</li>
+<li>Nix</li>
 </ul>
 
-<h2 id="metadata">Metadata</h2>
+<p>Multiple data formats can be mixed without trouble in the same site.</p>
 
-<p>Markup files can have provide metadata in the nix format by wrapping it between <code>{---</code> and <code>---}</code>.</p>
+<h2 id="nixdata">Nix data</h2>
 
-<pre><code>  {---
-  tags = [ &quot;xxxx&quot; ];
-  ---}
+<p>Nix data can be used to create structured data, example from the agency theme data used for generating team information:</p>
+
+<pre><code class="nix">[
+  {
+    img = &quot;1.jpg&quot;;
+    name = &quot;Kay Garland&quot;;
+    position = &quot;Lead Designer&quot;;
+    social = [
+      { type = &quot;twitter&quot;; link = &quot;#&quot;; }
+      { type = &quot;facebook&quot;; link = &quot;#&quot;; }
+      { type = &quot;linkedin&quot;; link = &quot;#&quot;; }
+    ];
+  }
+  {
+    img = &quot;2.jpg&quot;;
+    name = &quot;Larry Parker&quot;;
+    position = &quot;Lead Marketer&quot;;
+    social = [
+      { type = &quot;twitter&quot;; link = &quot;#&quot;; }
+      { type = &quot;facebook&quot;; link = &quot;#&quot;; }
+      { type = &quot;linkedin&quot;; link = &quot;#&quot;; }
+    ];
+  }
+]
 </code></pre>
 
-<h2 id="splittingdata">Splitting data</h2>
+<p>Note: Nix data can be also be declared as a function so parameters can be passed to it.</p>
 
-<p>Markup files support content introduction and multipages.</p>
+<h2 id="markupdata">Markup data</h2>
 
-<p>Introduction and main contents can be split with the <code>&gt;&gt;&gt;</code> introduction separator, the introduction separator can be used only once.</p>
+<p>Markup data is data written in markdown or asciidoc format.</p>
 
-<p>For mutipage content, the page separator <code>&lt;&lt;&lt;</code> can be used to make a page break, the page separator can be used multiple times.</p>
+<p>Each format is fully supported and allow some extra features.</p>
 
-<h2 id="datainsite.nix">Data in site.nix</h2>
+<h3 id="multipagecontent">Multipage content</h3>
 
-<p>The data section is handling site data.</p>
+<p>The page separator <code>&lt;&lt;&lt;</code> can be used to split a markup file in multiple pages:</p>
 
-<ul>
-<li><code>loadDir</code>: loads a folder with all of its files. (not recursive)</li>
-<li><code>loadFile</code>: load a single data file.</li>
-</ul>
+<pre><code class="markdown">## Lorem ipsum
 
-<p>Navbar or taxonomy data is also declared in the data section.</p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-<p>A data is just an attribute set with special keys set depending on the format, the filename and the file contents. Check the <a href="https://styx-static.github.io/styx-site/documentation.html">documentation</a> for details.</p>
+&lt;&lt;&lt;
 
-<h2 id="creatingnewdata">Creating new data</h2>
+## Nulla facilisi
 
-<p>Create a new file in the data folder, the file name should be <code>YYYY-MM-DD-TITLE.EXT</code> or <code>YYYY-MM-DDThh:mm:ss-TITLE.EXT</code> or <code>TITLE.EXT</code>, if the date is included, a <code>date</code> field will automatically be added to the data attribute set. (<code>date</code> can also be included in the file metadata)</p>
+Sed turpis felis, luctus ac mauris nec, sollicitudin commodo urna. Etiam eleifend interdum velit, quis egestas elit commodo nec.
 
-    </div>
-  </content>
+&lt;&lt;&lt; 
+
+## Duis ex magna
+
+Duis ex magna, ultrices non mauris eget, auctor dictum mi. In porta dictum finibus. Nulla ultricies nunc ut risus maximus, non maximus nunc elementum.
+</code></pre>
+
+<hr />
+
+<p>This page is a multipage post, use the navigation below to access the next page.</p>
+
+      </div>
+    </content>
 </entry>
 
 <entry>
   <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-14-pages.html</id>
   <title>Pages</title>
-  <updated>2016-09-14T00:00:00"</updated>
+  <updated>2016-09-14T00:00:00Z</updated>
   <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-14-pages.html" rel="alternate" type="text/html"/>
   <summary type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Styx can generate a various type of pages. Page generation is handled in the <code>pages</code> section of <code>site.nix</code>. This post introduce how to manage site pages.</p>
-    </div>
-  </summary>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This post introduce how a styx site site generate pages.</p>
+
+      </div>
+    </summary>
   <content type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Styx can generate a various type of pages. Page generation is handled in the <code>pages</code> section of <code>site.nix</code>. This post introduce how to manage site pages.</p>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>In <code>site.nix</code>, a page is declared as an attribute set in the <code>pages</code> attribute, example:</p>
 
-<h2 id="styxpages">Styx pages</h2>
+<pre><code class="nix">pages = {
+  about = {
+    path     = &quot;/about.html&quot;;
+    template = templates.page.full;
+    layout   = templates.layout;
+  } // data.about;
+};
+</code></pre>
 
-<p>A styx page is an attribute sets with at least a <code>template</code>, <code>layout</code> and <code>path</code> attribute.</p>
+<p>Note: This example merges a data set in the page set, this is usual way to create pages from data.</p>
+
+<h2 id="basics">Basics</h2>
+
+<p>During site generation, styx evaluates <code>generatePage</code> on each <code>pages</code> page.<br/>
+<code>generatePage</code> definition is <code>page: pages.layout (page.template page)</code>, it simply evaluates a page set by its template, and evaluate that result with the layout.<br/>
+The generated page content is output in the page <code>path</code> file.</p>
+
+<p>A simple example of a page is:</p>
+
+<pre><code class="nix">pages = {
+  hello = {
+    layout = template: &quot;&lt;html&gt;&lt;body&gt;${template}&lt;/body&gt;&lt;/html&gt;&quot;;
+    template = page: ''
+      &lt;h1&gt;Styx example page&lt;/h1&gt;
+      ${page.content}
+    '';
+    content = &quot;&lt;p&gt;Hello world!&lt;/p&gt;&quot;;
+    path = &quot;/hello.html&quot;;
+  };
+}
+</code></pre>
+
+<p>Will generate <code>/hello.html</code> with the following contents:</p>
+
+<pre><code class="html">&lt;html&gt;&lt;body&gt;&lt;h1&gt;Styx example page&lt;/h1&gt;
+&lt;p&gt;Hello world!&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+
+<h2 id="helperfunctions">Helper functions</h2>
+
+<p>The standard library provide helper functions to generate multiple type of pages:</p>
 
 <ul>
-<li><code>path</code>: determines the path of the page.</li>
-<li><code>template</code> and <code>layout</code> are the templates used to render the page.</li>
-</ul>
-
-<p>Page attribute set is first passed to the template, and that result is passed to the <code>layout</code> and output in <code>path</code>.</p>
-
-<p>Pages can be created from data, or from plain templates.</p>
-
-<p>The standard library provide helper functions to generate different types of pages:</p>
-
-<ul>
-<li><code>mkSplit</code>: to split data through multiple pages, useful to make archive pages.</li>
+<li><code>mkSplit</code>: to split a data list between multiple pages, used to create archive like pages.</li>
 <li><code>mkPageList</code>: to generate a list of pages from a list of data.</li>
-<li><code>mkMultipages</code>: to split a single data piece between multiple pages.</li>
+<li><code>mkMultipages</code>: to split a multipage data between multiple pages.</li>
 <li><code>mkTaxonomyPages</code>: to generate taxonomy pages from taxonomy data.</li>
 </ul>
 
-<p>For more details refer to the <a href="https://styx-static.github.io/styx-site/documentation.html#Pages">pages</a> chapter of styx documentation.</p>
-
-    </div>
-  </content>
+      </div>
+    </content>
 </entry>
 
 <entry>
-  <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-multipages.html</id>
-  <title>Multipages</title>
-  <updated>2016-09-13T00:00:00"</updated>
-  <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-multipages.html" rel="alternate" type="text/html"/>
+  <id>https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-drafts.html</id>
+  <title>Drafts</title>
+  <updated>2016-09-13T00:00:00Z</updated>
+  <link href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-drafts.html" rel="alternate" type="text/html"/>
   <summary type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>This post is an example of multipage page.</p>
-    </div>
-  </summary>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Drafts pages are only rendered when the <code>--draft</code> is passed to the styx command.
+This post introduce how drafts works in styx.</p>
+
+      </div>
+    </summary>
   <content type="xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>This post is an example of multipage page.</p>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Styx provides two approaches to manage draft content:</p>
 
-<p>The page separator <code>&lt;&lt;&lt;</code> can be used to make a page break.</p>
+<ul>
+<li>Metadata</li>
+<li>Directories</li>
+</ul>
 
-    </div>
-  </content>
+<h2 id="usingmetadata">Using metadata</h2>
+
+<p>By using a <code>draft</code> metadata key, it possible to set a markup file to be draft data:</p>
+
+<pre><code class="markdown">{---
+draft = true;
+---}
+
+## Lorem ipsum
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+</code></pre>
+
+<p>Then, the drafts will automatically be filtered when loading the data in <code>site.nix</code> when <code>loadDir</code> is used.</p>
+
+<pre><code class="nix">data = {
+  posts = sortBy &quot;date&quot; &quot;dsc&quot; (loadDir { dir = ./path/to/posts; inherit env; });
+};
+</code></pre>
+
+<p>This is the recommended solution as it is the easiest to set in place.</p>
+
+<h2 id="splittingdirectories">Splitting directories</h2>
+
+<p>In this approach, drafts are in a separate directory.</p>
+
+<pre><code class="nix">data = {
+  posts  = let
+    drafts = loadDir { dir = ./path/to/drafts; inherit env; draft = true; });
+    posts  = optionals (conf.renderDrafts == true)
+               (loadDir { dir = ./path/to/posts;  inherit env; });
+  in sortBy &quot;date&quot; &quot;dsc&quot; (posts ++ drafts);
+};
+</code></pre>
+
+      </div>
+    </content>
 </entry>
 
 </feed>

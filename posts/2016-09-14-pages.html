@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pages - Styx Showcase Theme</title>
+<title>Pages - Showcase Example</title>
 <link href="https://styx-static.github.io/styx-theme-showcase/feed.xml" rel="alternate" type="application/atom+xml" />
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css" rel="stylesheet" type="text/css" />
 <link href="https://styx-static.github.io/styx-theme-showcase/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -20,7 +21,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="https://styx-static.github.io/styx-theme-showcase">Styx Showcase Theme</a>
+  <a class="navbar-brand" href="https://styx-static.github.io/styx-theme-showcase">Showcase Example</a>
 </div>
 <div class="collapse navbar-collapse" id="navbar">
 <ul class="nav navbar-nav navbar-right">
@@ -38,7 +39,6 @@
       <div class="col-md-9">
         <ol class="breadcrumb">
   <li><a href="https://styx-static.github.io/styx-theme-showcase/index.html"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-
   <li class="active">Pages</li>
 </ol>
 
@@ -53,41 +53,75 @@
   <div class="meta text-muted">
     <p>
       <i class="fa fa-calendar-o" aria-hidden="true"></i>
-      <time datetime="2016-09-14T00:00:00">14 Sep 2016</time>
+      <time datetime="2016-09-14T00:00:00Z">14 Sep 2016</time>
     </p>
-    <p><i class="fa fa-tags" aria-hidden="true"></i> <a href="https://styx-static.github.io/styx-theme-showcase/tags/pages/">pages</a></p>
+    <p><i class="fa fa-tags" aria-hidden="true"></i> <a href="https://styx-static.github.io/styx-theme-showcase/tags/pages/index.html">pages</a></p>
   </div>
 
   <div class="content">
-    <p>Styx can generate a various type of pages. Page generation is handled in the <code>pages</code> section of <code>site.nix</code>. This post introduce how to manage site pages.</p>
+    <p>In <code>site.nix</code>, a page is declared as an attribute set in the <code>pages</code> attribute, example:</p>
 
-<h2 id="styxpages">Styx pages</h2>
+<pre><code class="nix">pages = {
+  about = {
+    path     = &quot;/about.html&quot;;
+    template = templates.page.full;
+    layout   = templates.layout;
+  } // data.about;
+};
+</code></pre>
 
-<p>A styx page is an attribute sets with at least a <code>template</code>, <code>layout</code> and <code>path</code> attribute.</p>
+<p>Note: This example merges a data set in the page set, this is usual way to create pages from data.</p>
+
+<h2 id="basics">Basics</h2>
+
+<p>During site generation, styx evaluates <code>generatePage</code> on each <code>pages</code> page.<br/>
+<code>generatePage</code> definition is <code>page: pages.layout (page.template page)</code>, it simply evaluates a page set by its template, and evaluate that result with the layout.<br/>
+The generated page content is output in the page <code>path</code> file.</p>
+
+<p>A simple example of a page is:</p>
+
+<pre><code class="nix">pages = {
+  hello = {
+    layout = template: &quot;&lt;html&gt;&lt;body&gt;${template}&lt;/body&gt;&lt;/html&gt;&quot;;
+    template = page: ''
+      &lt;h1&gt;Styx example page&lt;/h1&gt;
+      ${page.content}
+    '';
+    content = &quot;&lt;p&gt;Hello world!&lt;/p&gt;&quot;;
+    path = &quot;/hello.html&quot;;
+  };
+}
+</code></pre>
+
+<p>Will generate <code>/hello.html</code> with the following contents:</p>
+
+<pre><code class="html">&lt;html&gt;&lt;body&gt;&lt;h1&gt;Styx example page&lt;/h1&gt;
+&lt;p&gt;Hello world!&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+
+<h2 id="helperfunctions">Helper functions</h2>
+
+<p>The standard library provide helper functions to generate multiple type of pages:</p>
 
 <ul>
-<li><code>path</code>: determines the path of the page.</li>
-<li><code>template</code> and <code>layout</code> are the templates used to render the page.</li>
-</ul>
-
-<p>Page attribute set is first passed to the template, and that result is passed to the <code>layout</code> and output in <code>path</code>.</p>
-
-<p>Pages can be created from data, or from plain templates.</p>
-
-<p>The standard library provide helper functions to generate different types of pages:</p>
-
-<ul>
-<li><code>mkSplit</code>: to split data through multiple pages, useful to make archive pages.</li>
+<li><code>mkSplit</code>: to split a data list between multiple pages, used to create archive like pages.</li>
 <li><code>mkPageList</code>: to generate a list of pages from a list of data.</li>
-<li><code>mkMultipages</code>: to split a single data piece between multiple pages.</li>
+<li><code>mkMultipages</code>: to split a multipage data between multiple pages.</li>
 <li><code>mkTaxonomyPages</code>: to generate taxonomy pages from taxonomy data.</li>
 </ul>
-
-<p>For more details refer to the <a href="https://styx-static.github.io/styx-site/documentation.html#Pages">pages</a> chapter of styx documentation.</p>
 
   </div>
 
   
+
+  <hr /><nav aria-label="...">
+<ul class="pager">
+<li class="previous"><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html"><span aria-hidden="true">&larr;</span> Content</a></li>
+<li class="next"><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-drafts.html">Drafts <span aria-hidden="true">&rarr;</span></a></li>
+</ul>
+</nav>
+
 
 </article>
 
@@ -97,25 +131,23 @@
   <section>
   <h2>Taxonomies</h2>
   <section class="taxonomy">
-<header><a href="https://styx-static.github.io/styx-theme-showcase/level/">level</a></header>
+<header><a href="https://styx-static.github.io/styx-theme-showcase/level/index.html">level</a></header>
 <ul class="terms">
-<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★★★/">★★★</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★★/index.html">★★</a> (4)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★★/">★★</a> (3)</li>
-
-<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★/">★</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★/index.html">★</a> (1)</li>
 
 </ul>
 
-<header><a href="https://styx-static.github.io/styx-theme-showcase/tags/">tags</a></header>
+<header><a href="https://styx-static.github.io/styx-theme-showcase/tags/index.html">tags</a></header>
 <ul class="terms">
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/pages/">pages</a> (2)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/content/index.html">content</a> (3)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/data/">data</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/pages/index.html">pages</a> (1)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/themes/">themes</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/themes/index.html">themes</a> (1)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/basics/">basics</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/tutorial/index.html">tutorial</a> (1)</li>
 
 </ul>
 
@@ -127,7 +159,15 @@
   <h2>Recent Posts</h2>
   <ul>
   <li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-basics.html">Basics</a>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-19-blog-tutorial.html">Blog tutorial</a>
+</li>
+
+<li>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-features.html">Features</a>
+</li>
+
+<li>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-17-media.html">Embedded media</a>
 </li>
 
 <li>
@@ -135,15 +175,7 @@
 </li>
 
 <li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html">Data</a>
-</li>
-
-<li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-14-pages.html">Pages</a>
-</li>
-
-<li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-multipages.html">Multipages</a>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html">Content</a>
 </li>
 
   </ul>
@@ -158,7 +190,7 @@
   <div class="container wrapper">
     <div class="row">
       <div class="col-sm-4 col-xs-4">
-        <p>&copy; 2016</p>
+        <p>&copy; 2017</p>
       </div>
       <div class="col-sm-4 col-xs-4">
         <ul class="list-unstyled">
@@ -171,7 +203,11 @@
     </div>
   </div>
 </footer>
-<script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script crossorigin="anonymous" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script crossorigin="anonymous" src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+<script crossorigin="anonymous" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script crossorigin="anonymous" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+<script crossorigin="anonymous" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/nix.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script crossorigin="anonymous" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

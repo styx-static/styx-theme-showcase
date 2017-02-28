@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>level: ★★ - Showcase Example</title>
+<title>Embedded media - Showcase Example</title>
 <link href="https://styx-static.github.io/styx-theme-showcase/feed.xml" rel="alternate" type="application/atom+xml" />
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -37,14 +37,100 @@
   <div class="container wrapper">
     <div class="row">
       <div class="col-md-9">
-        
-        <h1>level: ★★</h1>
-<ul>
-<li><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-14-pages.html">Pages</a></li>
-<li><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html">Content</a></li>
-<li><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-16-themes.html">Themes</a></li>
-<li><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-17-media.html">Embedded media</a></li>
+        <ol class="breadcrumb">
+  <li><a href="https://styx-static.github.io/styx-theme-showcase/index.html"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+  <li class="active">Embedded media</li>
+</ol>
+
+        <article class="full">
+
+  <div class="banner" >
+  </div>
+  <header class="post-header">
+    <h1>Embedded media</h1>
+  </header>
+
+  <div class="meta text-muted">
+    <p>
+      <i class="fa fa-calendar-o" aria-hidden="true"></i>
+      <time datetime="2016-09-17T00:00:00Z">17 Sep 2016</time>
+    </p>
+    <p><i class="fa fa-tags" aria-hidden="true"></i> <a href="https://styx-static.github.io/styx-theme-showcase/tags/content/index.html">content</a></p>
+  </div>
+
+  <div class="content">
+    <p>The generic templates template theme provide templates that can be used in content to embed external media.</p>
+
+<p>To use the generic template theme add it to the themes list of <code>site.nix</code>:</p>
+
+<pre><code class="nix">  themes = [
+    styx-themes.generic-templates
+  ];
+</code></pre>
+
+<h2 id="youtubevideos">Youtube videos</h2>
+
+<pre><code class="nix">{{ templates.media.youtube { id = &quot;YbUPdv03ciI&quot;; } }}
+</code></pre>
+
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/YbUPdv03ciI?ecver=1" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="vimeovideos">Vimeo videos</h2>
+
+<pre><code class="nix">{{ templates.media.vimeo { id = &quot;124510855&quot;; } }}
+</code></pre>
+
+<p><iframe src="https://player.vimeo.com/video/124510855" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></p>
+
+<h2 id="speackerdeckpresentation">Speacker deck presentation</h2>
+
+<pre><code class="nix">{{ templates.media.speakerdeck { id = &quot;0c32d0d17488429eaf6bc3278c1d0fc8&quot;; } }}
+</code></pre>
+
+<script async="async" class="speakerdeck-embed" data-id="0c32d0d17488429eaf6bc3278c1d0fc8" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
+<h2 id="githubgists">GitHub Gists</h2>
+
+<pre><code class="nix">{{ templates.media.gist { user = &quot;dmalikov&quot;; id = &quot;613fa59063604e51d323&quot;; } }}
+</code></pre>
+
+<script src="https://gist.github.com/dmalikov/613fa59063604e51d323.js"></script>
+
+<h2 id="giphy">Giphy</h2>
+
+<pre><code class="nix">{{ templates.media.giphy { id = &quot;4yh9SoRl7QLjW&quot;; height = 360; width = 480; } }}
+</code></pre>
+
+<p><iframe src="//giphy.com/embed/4yh9SoRl7QLjW" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></p>
+
+<h2 id="slideshare">Slide share</h2>
+
+<pre><code class="nix">{{ templates.media.slideshare { embedCode = &quot;60836660&quot;; } }}
+</code></pre>
+
+<p><iframe src='https://www.slideshare.net/slideshow/embed_code/60836660' width='640' height='480' allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></p>
+
+<h2 id="twitter">Twitter</h2>
+
+<pre><code>{{ templates.media.twitter { user = &quot;nixos_org&quot;; height = 600; } }}
+</code></pre>
+
+<p><a class="twitter-timeline" data-height="600" href="https://twitter.com/nixos_org">Tweets by nixos_org</a>
+ <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> </p>
+
+  </div>
+
+  
+
+  <hr /><nav aria-label="...">
+<ul class="pager">
+<li class="previous"><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-features.html"><span aria-hidden="true">&larr;</span> Features</a></li>
+<li class="next"><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-16-themes.html">Themes <span aria-hidden="true">&rarr;</span></a></li>
 </ul>
+</nav>
+
+
+</article>
 
       </div>
       <div class="col-md-3">

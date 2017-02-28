@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Data - Styx Showcase Theme</title>
+<title>Content - Showcase Example</title>
 <link href="https://styx-static.github.io/styx-theme-showcase/feed.xml" rel="alternate" type="application/atom+xml" />
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css" rel="stylesheet" type="text/css" />
 <link href="https://styx-static.github.io/styx-theme-showcase/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -20,7 +21,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="https://styx-static.github.io/styx-theme-showcase">Styx Showcase Theme</a>
+  <a class="navbar-brand" href="https://styx-static.github.io/styx-theme-showcase">Showcase Example</a>
 </div>
 <div class="collapse navbar-collapse" id="navbar">
 <ul class="nav navbar-nav navbar-right">
@@ -38,8 +39,7 @@
       <div class="col-md-9">
         <ol class="breadcrumb">
   <li><a href="https://styx-static.github.io/styx-theme-showcase/index.html"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-
-  <li class="active">Data</li>
+  <li class="active">Content</li>
 </ol>
 
         <article class="full">
@@ -47,67 +47,118 @@
   <div class="banner" >
   </div>
   <header class="post-header">
-    <h1>Data</h1>
+    <h1>Content</h1>
   </header>
 
   <div class="meta text-muted">
     <p>
       <i class="fa fa-calendar-o" aria-hidden="true"></i>
-      <time datetime="2016-09-15T00:00:00">15 Sep 2016</time>
+      <time datetime="2016-09-15T00:00:00Z">15 Sep 2016</time>
     </p>
-    <p><i class="fa fa-tags" aria-hidden="true"></i> <a href="https://styx-static.github.io/styx-theme-showcase/tags/data/">data</a></p>
+    <p><i class="fa fa-tags" aria-hidden="true"></i> <a href="https://styx-static.github.io/styx-theme-showcase/tags/content/index.html">content</a></p>
   </div>
 
   <div class="content">
-    <p>Styx support multiple data formats. External data is handled in the <code>data</code> section <code>site.nix</code>. This post introduce how to manage a styx site data.</p>
+    <p>Content, also called as data in <code>site.nix</code> or the documentation, refers to the content used to generate a site.</p>
 
-<h2 id="formats">Formats</h2>
-
-<p>Styx support data in the following formats:</p>
+<p>Multiple formats are supported:</p>
 
 <ul>
-<li>Markdown: simple and easy to use markup format.</li>
-<li>AsciiDoc: markup format with many features.</li>
-<li>Nix: data centric format.</li>
+<li>Markdown</li>
+<li>Asciidoc</li>
+<li>Nix</li>
 </ul>
 
-<h2 id="metadata">Metadata</h2>
+<p>Multiple data formats can be mixed without trouble in the same site.</p>
 
-<p>Markup files can have provide metadata in the nix format by wrapping it between <code>{---</code> and <code>---}</code>.</p>
+<h2 id="nixdata">Nix data</h2>
 
-<pre><code>  {---
-  tags = [ &quot;xxxx&quot; ];
-  ---}
+<p>Nix data can be used to create structured data, example from the agency theme data used for generating team information:</p>
+
+<pre><code class="nix">[
+  {
+    img = &quot;1.jpg&quot;;
+    name = &quot;Kay Garland&quot;;
+    position = &quot;Lead Designer&quot;;
+    social = [
+      { type = &quot;twitter&quot;; link = &quot;#&quot;; }
+      { type = &quot;facebook&quot;; link = &quot;#&quot;; }
+      { type = &quot;linkedin&quot;; link = &quot;#&quot;; }
+    ];
+  }
+  {
+    img = &quot;2.jpg&quot;;
+    name = &quot;Larry Parker&quot;;
+    position = &quot;Lead Marketer&quot;;
+    social = [
+      { type = &quot;twitter&quot;; link = &quot;#&quot;; }
+      { type = &quot;facebook&quot;; link = &quot;#&quot;; }
+      { type = &quot;linkedin&quot;; link = &quot;#&quot;; }
+    ];
+  }
+]
 </code></pre>
 
-<h2 id="splittingdata">Splitting data</h2>
+<p>Note: Nix data can be also be declared as a function so parameters can be passed to it.</p>
 
-<p>Markup files support content introduction and multipages.</p>
+<h2 id="markupdata">Markup data</h2>
 
-<p>Introduction and main contents can be split with the <code>&gt;&gt;&gt;</code> introduction separator, the introduction separator can be used only once.</p>
+<p>Markup data is data written in markdown or asciidoc format.</p>
 
-<p>For mutipage content, the page separator <code>&lt;&lt;&lt;</code> can be used to make a page break, the page separator can be used multiple times.</p>
+<p>Each format is fully supported and allow some extra features.</p>
 
-<h2 id="datainsite.nix">Data in site.nix</h2>
+<h3 id="multipagecontent">Multipage content</h3>
 
-<p>The data section is handling site data.</p>
+<p>The page separator <code>&lt;&lt;&lt;</code> can be used to split a markup file in multiple pages:</p>
 
-<ul>
-<li><code>loadDir</code>: loads a folder with all of its files. (not recursive)</li>
-<li><code>loadFile</code>: load a single data file.</li>
-</ul>
+<pre><code class="markdown">## Lorem ipsum
 
-<p>Navbar or taxonomy data is also declared in the data section.</p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-<p>A data is just an attribute set with special keys set depending on the format, the filename and the file contents. Check the <a href="https://styx-static.github.io/styx-site/documentation.html">documentation</a> for details.</p>
+&lt;&lt;&lt;
 
-<h2 id="creatingnewdata">Creating new data</h2>
+## Nulla facilisi
 
-<p>Create a new file in the data folder, the file name should be <code>YYYY-MM-DD-TITLE.EXT</code> or <code>YYYY-MM-DDThh:mm:ss-TITLE.EXT</code> or <code>TITLE.EXT</code>, if the date is included, a <code>date</code> field will automatically be added to the data attribute set. (<code>date</code> can also be included in the file metadata)</p>
+Sed turpis felis, luctus ac mauris nec, sollicitudin commodo urna. Etiam eleifend interdum velit, quis egestas elit commodo nec.
+
+&lt;&lt;&lt; 
+
+## Duis ex magna
+
+Duis ex magna, ultrices non mauris eget, auctor dictum mi. In porta dictum finibus. Nulla ultricies nunc ut risus maximus, non maximus nunc elementum.
+</code></pre>
+
+<hr />
+
+<p>This page is a multipage post, use the navigation below to access the next page.</p>
 
   </div>
 
-  
+  <nav aria-label="Page navigation" class="pagination">
+<ul class="pagination">
+<li class="disabled">
+<a href="#" aria-label="Previous">
+<span aria-hidden="true">&laquo;</span>
+</a>
+</li>
+<li class="active"><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html">1</a></li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data-2.html">2</a></li>
+<li>
+<a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data-2.html" aria-label="Next">
+<span aria-hidden="true">&raquo;</span>
+</a>
+</li>
+</ul>
+</nav>
+
+
+  <hr /><nav aria-label="...">
+<ul class="pager">
+<li class="previous"><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-16-themes.html"><span aria-hidden="true">&larr;</span> Themes</a></li>
+<li class="next"><a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-14-pages.html">Pages <span aria-hidden="true">&rarr;</span></a></li>
+</ul>
+</nav>
+
 
 </article>
 
@@ -117,25 +168,23 @@
   <section>
   <h2>Taxonomies</h2>
   <section class="taxonomy">
-<header><a href="https://styx-static.github.io/styx-theme-showcase/level/">level</a></header>
+<header><a href="https://styx-static.github.io/styx-theme-showcase/level/index.html">level</a></header>
 <ul class="terms">
-<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★★★/">★★★</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★★/index.html">★★</a> (4)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★★/">★★</a> (3)</li>
-
-<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★/">★</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/level/★/index.html">★</a> (1)</li>
 
 </ul>
 
-<header><a href="https://styx-static.github.io/styx-theme-showcase/tags/">tags</a></header>
+<header><a href="https://styx-static.github.io/styx-theme-showcase/tags/index.html">tags</a></header>
 <ul class="terms">
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/pages/">pages</a> (2)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/content/index.html">content</a> (3)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/data/">data</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/pages/index.html">pages</a> (1)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/themes/">themes</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/themes/index.html">themes</a> (1)</li>
 
-<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/basics/">basics</a> (1)</li>
+<li><a href="https://styx-static.github.io/styx-theme-showcase/tags/tutorial/index.html">tutorial</a> (1)</li>
 
 </ul>
 
@@ -147,7 +196,15 @@
   <h2>Recent Posts</h2>
   <ul>
   <li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-basics.html">Basics</a>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-19-blog-tutorial.html">Blog tutorial</a>
+</li>
+
+<li>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-18-features.html">Features</a>
+</li>
+
+<li>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-17-media.html">Embedded media</a>
 </li>
 
 <li>
@@ -155,15 +212,7 @@
 </li>
 
 <li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html">Data</a>
-</li>
-
-<li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-14-pages.html">Pages</a>
-</li>
-
-<li>
-  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-13-multipages.html">Multipages</a>
+  <a href="https://styx-static.github.io/styx-theme-showcase/posts/2016-09-15-data.html">Content</a>
 </li>
 
   </ul>
@@ -178,7 +227,7 @@
   <div class="container wrapper">
     <div class="row">
       <div class="col-sm-4 col-xs-4">
-        <p>&copy; 2016</p>
+        <p>&copy; 2017</p>
       </div>
       <div class="col-sm-4 col-xs-4">
         <ul class="list-unstyled">
@@ -191,7 +240,11 @@
     </div>
   </div>
 </footer>
-<script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script crossorigin="anonymous" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script crossorigin="anonymous" src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+<script crossorigin="anonymous" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script crossorigin="anonymous" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+<script crossorigin="anonymous" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/nix.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script crossorigin="anonymous" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
