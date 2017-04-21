@@ -190,7 +190,7 @@ Then <code>gen-sample-data</code> command that will generate some data for us:</
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-nix" data-lang="nix">  data = {
-    about = lib.loadFile { file = ./data/sample/pages/about.md"; inherit env; };
+    about = lib.loadFile { file = ./data/sample/pages/about.md; inherit env; };
   };</code></pre>
 </div>
 </div>
@@ -221,7 +221,7 @@ Then <code>gen-sample-data</code> command that will generate some data for us:</
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-nix" data-lang="nix">  data = {
-    about = lib.loadFile { file = ./data/sample/pages/about.md"; inherit env; };
+    about = lib.loadFile { file = ./data/sample/pages/about.md; inherit env; };
     menu  = [ pages.about ];
   };</code></pre>
 </div>
@@ -240,7 +240,7 @@ Then <code>gen-sample-data</code> command that will generate some data for us:</
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-nix" data-lang="nix">  data = {
-    about = lib.loadFile { file = ./data/sample/pages/about.md"; inherit env; };
+    about = lib.loadFile { file = ./data/sample/pages/about.md; inherit env; };
     menu  = [ pages.about ];
     posts = lib.sortBy "date" "dsc" (lib.loadDir { dir = ./data/sample/posts; inherit env; });
   };</code></pre>
