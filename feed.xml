@@ -630,14 +630,14 @@ Any styx site can also be deployed with NixOps.</p>
 <pre><code class="nix">{{ templates.media.youtube { id = &quot;YbUPdv03ciI&quot;; } }}
 </code></pre>
 
-<p><iframe width="560" height="315" src="https://www.youtube.com/embed/YbUPdv03ciI?ecver=1" frameborder="0" allowfullscreen></iframe></p>
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/YbUPdv03ciI?ecver=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
 
 <h2 id="vimeovideos">Vimeo videos</h2>
 
 <pre><code class="nix">{{ templates.media.vimeo { id = &quot;124510855&quot;; } }}
 </code></pre>
 
-<p><iframe src="https://player.vimeo.com/video/124510855" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></p>
+<p><iframe src="https://player.vimeo.com/video/124510855" width="640" height="360" frameborder="0" webkitallowfullscreen="webkitallowfullscreen=" mozallowfullscreen="mozallowfullscreen=" allowfullscreen="allowfullscreen"></iframe></p>
 
 <h2 id="speackerdeckpresentation">Speacker deck presentation</h2>
 
@@ -658,14 +658,14 @@ Any styx site can also be deployed with NixOps.</p>
 <pre><code class="nix">{{ templates.media.giphy { id = &quot;4yh9SoRl7QLjW&quot;; height = 360; width = 480; } }}
 </code></pre>
 
-<p><iframe src="//giphy.com/embed/4yh9SoRl7QLjW" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></p>
+<p><iframe src="//giphy.com/embed/4yh9SoRl7QLjW" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen="allowFullScreen"></iframe></p>
 
 <h2 id="slideshare">Slide share</h2>
 
 <pre><code class="nix">{{ templates.media.slideshare { embedCode = &quot;60836660&quot;; } }}
 </code></pre>
 
-<p><iframe src='https://www.slideshare.net/slideshow/embed_code/60836660' width='640' height='480' allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></p>
+<p><iframe src='https://www.slideshare.net/slideshow/embed_code/60836660' width='640' height='480' allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen=" mozallowfullscreen="mozallowfullscreen"></iframe></p>
 
 <h2 id="twitter">Twitter</h2>
 
@@ -673,7 +673,7 @@ Any styx site can also be deployed with NixOps.</p>
 </code></pre>
 
 <p><a class="twitter-timeline" data-height="600" href="https://twitter.com/nixos_org">Tweets by nixos_org</a>
- <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> </p>
+ <script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script> </p>
 
       </div>
     </content>
