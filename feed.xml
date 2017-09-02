@@ -723,18 +723,22 @@ In this example, the <code>styx-themes.generic-templates</code> is combined with
 
 <h2 id="examplesites">Example sites</h2>
 
-<p>Themes of the <code>styx-themes</code> package provide an example site that can b previewed locally by running a single command:</p>
+<p>Themes of the <code>styx-themes</code> package provide an example site that can be previewed locally by running a single command:</p>
 
-<pre><code class="sh">$ styx preview --in $(nix-build --no-out-link -A styx-themes.showcase '&lt;nixpkgs&gt;')/example
+<pre><code class="sh">$ styx preview-theme showcase
 </code></pre>
 
 <p>The list of themes in the <code>styx-themes</code> set can be listed with the following command:</p>
 
-<pre><code class="sh">$ nix-env -f &quot;&lt;nixpkgs&gt;&quot; -qaP -A styx-themes
-styx-themes.agency    styx-theme-agency-2016-12-03
-styx-themes.hyde      styx-theme-hyde-2016-12-03
-styx-themes.orbit     styx-theme-orbit-2016-12-03
-styx-themes.showcase  styx-theme-showcase-2016-12-04
+<pre><code class="sh">$ styx preview-theme
+Please select a theme, available themes are:               
+- agency                                                   
+- generic-templates                                        
+- ghostwriter                                              
+- hyde                                                     
+- nix                                                      
+- orbit                                                    
+- showcase
 </code></pre>
 
 <h2 id="configurationinterface">Configuration interface</h2>
